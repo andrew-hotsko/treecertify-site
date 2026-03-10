@@ -819,26 +819,53 @@
     if (!name || !email || !city) { alert('Please fill in your name, email, and city.'); return; }
 
     const btn = document.querySelector('.modal-submit');
-    btn.textContent = 'Submitting…';
+    btn.textContent = 'Submitting\u2026';
     btn.disabled = true;
 
     const formId = '1FAIpQLSfUOKukx08c990IUOL8awkG8VrS4qGKXy0iIccc_B67nuv9Dw';
-    const params = new URLSearchParams();
-    params.append('entry.674258843', name);
-    params.append('entry.2081777311', email);
-    params.append('entry.622601832', isa);
-    params.append('entry.1096619862', city);
 
-    fetch(`https://docs.google.com/forms/d/e/${formId}/formResponse`, {
-      method: 'POST',
-      body: params.toString(),
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      mode: 'no-cors'
-    }).finally(() => {
+    // Create hidden iframe to receive the form submission
+    var iframe = document.getElementById('hiddenFormIframe');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.id = 'hiddenFormIframe';
+      iframe.name = 'hiddenFormIframe';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    }
+
+    // Create a real HTML form that targets the hidden iframe
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://docs.google.com/forms/d/e/' + formId + '/formResponse';
+    form.target = 'hiddenFormIframe';
+    form.style.display = 'none';
+
+    var fields = {
+      'entry.674258843': name,
+      'entry.2081777311': email,
+      'entry.622601832': isa,
+      'entry.1096619862': city
+    };
+
+    for (var key in fields) {
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = fields[key];
+      form.appendChild(input);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+
+    // Clean up and show success after a short delay
+    setTimeout(function() {
+      form.remove();
       document.getElementById('confirmedEmail').textContent = email;
       document.getElementById('modalForm').classList.add('hide');
       document.getElementById('modalSuccess').classList.add('show');
-    });
+    }, 1500);
   }
 
   // \u2500\u2500 CARD ANIMATION \u2500\u2500
