@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TreeCertify &mdash; The Right Ordinances. Every Permit. Every City.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #1D4E3E;
+    --forest-light: #2A6B55;
+    --forest-muted: #3D7D68;
+    --forest-bright: #4D9E82;
+    --forest-glow: #5BBF9A;
+    --dark-bg: #0C0D0B;
+    --dark-card: #131412;
+    --dark-raised: #1A1B18;
+    --dark-border: rgba(255,255,255,0.07);
+    --dark-border-mid: rgba(255,255,255,0.11);
+    --dark-text-dim: #3E3F3A;
+    --dark-text-mid: #6E6F68;
+    --dark-text-light: #D8D9D0;
+    --dark-text-white: #F2F3EC;
+    --bg: #FEFDFB;
+    --bg-card: #FAF9F6;
+    --bg-subtle: #F2F1EC;
+    --border: #E5E5DE;
+    --border-mid: #C4C4BB;
+    --text-tertiary: #9C9C93;
+    --text-secondary: #6B6B63;
+    --text-primary: #3A3A36;
+    --text-dark: #222220;
+    --text-darkest: #0A0A09;
+    --display: 'Instrument Sans', sans-serif;
+    --body: 'Roboto', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--body); background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+  /* \u2500\u2500 NAV \u2500\u2500 */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(12,13,11,0.88); backdrop-filter: blur(16px); border-bottom: 1px solid var(--dark-border); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 64px; }
+  .logo { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.5px; color: var(--dark-text-white); text-decoration: none; }
+  .logo span { color: var(--forest-glow); }
+  nav ul { display: flex; gap: 36px; list-style: none; align-items: center; }
+  nav ul a { font-size: 14px; font-weight: 500; color: var(--dark-text-mid); text-decoration: none; transition: color 0.2s; }
+  nav ul a:hover { color: var(--dark-text-white); }
+  .nav-cta { background: var(--forest) !important; color: var(--dark-text-white) !important; padding: 8px 20px; border-radius: 6px; border: 1px solid rgba(91,191,154,0.15); transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--forest-light) !important; }
+
+  /* \u2500\u2500 HERO \u2500\u2500 */
+  .hero { min-height: 100vh; background: var(--dark-bg); display: flex; flex-direction: column; justify-content: center; padding: 120px 48px 100px; position: relative; overflow: hidden; }
+  .hero-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 55% 65% at 68% 38%, rgba(29,78,62,0.22) 0%, transparent 65%), radial-gradient(ellipse 35% 45% at 12% 70%, rgba(29,78,62,0.09) 0%, transparent 55%); pointer-events: none; }
+  .hero-dots { position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px); background-size: 32px 32px; pointer-events: none; mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%); }
+  .hero-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to bottom, transparent, var(--bg)); pointer-events: none; z-index: 2; }
+  .hero-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 3; }
+
+  .hero-eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--forest-bright); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--forest-bright); }
+  .hero h1 { font-family: var(--display); font-size: clamp(46px, 5.2vw, 68px); font-weight: 700; line-height: 1.03; letter-spacing: -2px; color: var(--dark-text-white); margin-bottom: 28px; }
+  .hero h1 em { font-style: normal; color: var(--forest-glow); }
+  .hero-sub { font-size: 18px; line-height: 1.7; color: var(--dark-text-mid); max-width: 440px; margin-bottom: 36px; }
+  .hero-actions { display: flex; align-items: center; gap: 20px; margin-bottom: 0; }
+
+  .btn-primary { background: var(--forest); color: #fff; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 500; text-decoration: none; border: 1px solid rgba(91,191,154,0.15); display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, transform 0.15s; cursor: pointer; font-family: var(--body); }
+  .btn-primary:hover { background: var(--forest-light); transform: translateY(-1px); }
+  .btn-ghost { color: var(--dark-text-mid); font-size: 15px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; background: none; border: none; cursor: pointer; font-family: var(--body); }
+  .btn-ghost:hover { color: var(--dark-text-white); }
+
+  /* Social proof */
+  .social-proof { margin-top: 40px; display: flex; align-items: center; gap: 14px; }
+  .sp-avatars { display: flex; }
+  .sp-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--forest); border: 2px solid var(--dark-bg); display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.85); margin-left: -8px; }
+  .sp-avatar:first-child { margin-left: 0; }
+  .sp-avatar:nth-child(2) { background: var(--forest-light); }
+  .sp-avatar:nth-child(3) { background: var(--forest-muted); }
+  .sp-avatar:nth-child(4) { background: #2C5F50; }
+  .sp-avatar:nth-child(5) { background: var(--dark-raised); border-color: var(--dark-border-mid); font-family: var(--mono); font-size: 9px; color: var(--dark-text-mid); font-weight: 400; }
+  .sp-text { font-size: 13px; color: var(--dark-text-mid); line-height: 1.4; }
+  .sp-text strong { color: var(--dark-text-light); font-weight: 500; }
+
+  /* Hero card */
+  .hero-card { background: var(--dark-card); border: 1px solid var(--dark-border-mid); border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 1px rgba(91,191,154,0.05), 0 32px 80px rgba(0,0,0,0.7); }
+  .card-header { background: linear-gradient(135deg, #192e25, #111e19); padding: 14px 18px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(91,191,154,0.08); }
+  .card-dots { display: flex; gap: 6px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: rgba(255,255,255,0.1); } .dot-y { background: rgba(255,255,255,0.15); } .dot-g { background: rgba(91,191,154,0.35); }
+  .card-label-mono { font-family: var(--mono); font-size: 10px; color: rgba(91,191,154,0.4); margin-left: auto; letter-spacing: 0.1em; }
+  .card-step { display: none; padding: 20px; }
+  .card-step.active { display: block; animation: stepIn 0.4s ease both; }
+  @keyframes stepIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .permit-row { display: flex; justify-content: space-between; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--dark-border); }
+  .permit-label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dark-text-dim); margin-bottom: 4px; }
+  .permit-value { font-size: 14px; font-weight: 500; color: var(--dark-text-light); }
+  .field-row { margin-bottom: 10px; }
+  .field-label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dark-text-dim); margin-bottom: 5px; }
+  .field-value { background: var(--dark-raised); border: 1px solid var(--dark-border-mid); border-radius: 6px; padding: 8px 12px; font-size: 13px; color: var(--dark-text-light); display: flex; align-items: center; justify-content: space-between; }
+  .field-value span { font-family: var(--mono); font-size: 11px; color: var(--forest-bright); }
+  .tree-spec { font-family: var(--mono); font-size: 11.5px; color: var(--forest-bright); background: rgba(29,78,62,0.1); border: 1px solid rgba(29,78,62,0.18); padding: 11px 13px; border-radius: 8px; margin-bottom: 12px; line-height: 1.9; }
+  .ai-block { background: var(--dark-raised); border: 1px solid var(--dark-border); border-radius: 8px; padding: 13px; margin-bottom: 12px; }
+  .ai-label-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .ai-label { font-family: var(--mono); font-size: 10px; color: var(--dark-text-dim); text-transform: uppercase; letter-spacing: 0.1em; }
+  .ai-thinking { display: flex; gap: 3px; align-items: center; }
+  .ai-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--forest-bright); opacity: 0; animation: thinkDot 1.2s infinite; }
+  .ai-dot:nth-child(2) { animation-delay: 0.2s; } .ai-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes thinkDot { 0%,80%,100%{opacity:0} 40%{opacity:1} }
+  .ai-text { font-size: 13px; line-height: 1.65; color: var(--dark-text-mid); min-height: 56px; }
+  .ai-text strong { color: var(--dark-text-light); font-weight: 500; }
+  .cursor { display: inline-block; width: 2px; height: 13px; background: var(--forest-glow); margin-left: 1px; vertical-align: middle; animation: blink 0.7s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .badges { display: flex; gap: 7px; flex-wrap: wrap; }
+  .badge { font-family: var(--mono); font-size: 10px; font-weight: 500; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.05em; }
+  .badge-green { background: rgba(91,191,154,0.08); color: var(--forest-bright); border: 1px solid rgba(91,191,154,0.12); }
+  .badge-amber { background: rgba(180,130,0,0.08); color: #c09010; border: 1px solid rgba(180,130,0,0.14); }
+  .badge-blue { background: rgba(80,120,200,0.08); color: #7090D0; border: 1px solid rgba(80,120,200,0.14); }
+  .report-preview { background: var(--dark-raised); border: 1px solid var(--dark-border); border-radius: 8px; padding: 14px; }
+  .report-line { height: 8px; border-radius: 4px; background: rgba(255,255,255,0.06); margin-bottom: 7px; }
+  .report-line.hl { background: rgba(91,191,154,0.18); animation: fillLine 0.8s ease both; }
+  .report-line.w100{width:100%} .report-line.w80{width:80%} .report-line.w90{width:90%} .report-line.w60{width:60%;animation:fillLine 0.8s 0.2s ease both} .report-line.w75{width:75%;animation:fillLine 0.8s 0.4s ease both} .report-line.w55{width:55%;animation:fillLine 0.8s 0.6s ease both}
+  @keyframes fillLine { from{width:0;opacity:0} }
+  .report-section-label { font-family: var(--mono); font-size: 9px; color: var(--forest-bright); text-transform: uppercase; letter-spacing: 0.1em; margin: 10px 0 7px; }
+  .card-progress { padding: 10px 18px; border-top: 1px solid var(--dark-border); display: flex; align-items: center; gap: 10px; }
+  .progress-track { flex: 1; height: 3px; background: var(--dark-raised); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--forest-glow); border-radius: 2px; transition: width 0.6s ease; }
+  .progress-label { font-family: var(--mono); font-size: 10px; color: var(--dark-text-dim); white-space: nowrap; }
+  .card-footer { padding: 12px 18px; border-top: 1px solid var(--dark-border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.15); }
+  .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--forest-glow); margin-right: 8px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+  .status-text { font-size: 11px; color: var(--dark-text-dim); }
+  .gen-btn { background: var(--forest); color: #fff; font-size: 12px; font-weight: 500; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; transition: background 0.2s; }
+  .gen-btn:hover { background: var(--forest-light); }
+
+  /* \u2500\u2500 STATS \u2500\u2500 */
+  .stats-strip { background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stats-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); padding: 0 48px; }
+  .stat-item { padding: 44px 40px; border-right: 1px solid var(--border); }
+  .stat-item:first-child { padding-left: 0; } .stat-item:last-child { border-right: none; padding-right: 0; }
+  .stat-num { font-family: var(--display); font-size: 44px; font-weight: 700; color: var(--text-darkest); letter-spacing: -2px; line-height: 1; margin-bottom: 8px; }
+  .stat-num span { color: var(--forest); }
+  .stat-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+
+  /* \u2500\u2500 SHARED SECTION STYLES \u2500\u2500 */
+  .section { padding: 120px 48px; background: var(--bg); }
+  .section-subtle { padding: 120px 48px; background: var(--bg-subtle); }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--forest-muted); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--forest-muted); }
+  .section-title { font-family: var(--display); font-size: clamp(30px, 3.2vw, 42px); font-weight: 700; letter-spacing: -1px; color: var(--text-darkest); margin-bottom: 14px; max-width: 560px; }
+  .section-sub { font-size: 17px; line-height: 1.65; color: var(--text-secondary); max-width: 520px; margin-bottom: 64px; }
+
+  /* \u2500\u2500 HOW IT WORKS \u2500\u2500 */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .step { background: var(--bg); padding: 40px; transition: background 0.2s; }
+  .step:hover { background: var(--bg-card); }
+  .step-num { font-family: var(--mono); font-size: 10px; color: var(--text-tertiary); letter-spacing: 0.1em; margin-bottom: 20px; }
+  .step-icon { width: 44px; height: 44px; background: rgba(29,78,62,0.06); border: 1px solid rgba(29,78,62,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .step h3 { font-family: var(--display); font-size: 19px; font-weight: 700; color: var(--text-darkest); margin-bottom: 10px; letter-spacing: -0.3px; }
+  .step p { font-size: 14px; line-height: 1.65; color: var(--text-secondary); }
+
+  /* \u2500\u2500 TRUST / CREDIBILITY BANNER \u2500\u2500 */
+  .trust-banner { background: var(--bg-subtle); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 48px; }
+  .trust-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+  .trust-item { display: flex; align-items: center; gap: 12px; }
+  .trust-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(29,78,62,0.08); border: 1px solid rgba(29,78,62,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .trust-text { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+  .trust-text strong { display: block; font-size: 13px; font-weight: 600; color: var(--text-darkest); margin-bottom: 1px; }
+  .trust-divider { width: 1px; height: 40px; background: var(--border); flex-shrink: 0; }
+
+  /* \u2500\u2500 BEFORE / AFTER \u2500\u2500 */
+  .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 60px; }
+  .ba-card { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+  .ba-card-header { padding: 14px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+  .ba-card.before .ba-card-header { background: var(--bg-card); }
+  .ba-card.after .ba-card-header { background: var(--forest); border-color: var(--forest); }
+  .ba-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; font-weight: 500; }
+  .ba-card.before .ba-tag { background: rgba(180,60,60,0.08); color: #B04040; border: 1px solid rgba(180,60,60,0.15); }
+  .ba-card.after .ba-tag { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.15); }
+  .ba-time { margin-left: auto; font-family: var(--mono); font-size: 11px; }
+  .ba-card.before .ba-time { color: #B04040; } .ba-card.after .ba-time { color: rgba(255,255,255,0.5); }
+  .ba-body { padding: 24px; background: var(--bg); }
+  .ba-card.after .ba-body { background: #f6fcf9; }
+  .before-item, .after-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .after-item { border-bottom: 1px solid rgba(29,78,62,0.08); }
+  .before-item:last-child, .after-item:last-child { border-bottom: none; }
+  .before-icon { width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0; background: rgba(180,60,60,0.06); border: 1px solid rgba(180,60,60,0.1); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .after-icon { width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0; background: rgba(29,78,62,0.08); border: 1px solid rgba(29,78,62,0.14); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .item-title { font-size: 13px; font-weight: 500; color: var(--text-darkest); margin-bottom: 3px; }
+  .item-sub { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+  .before-time-tag { margin-left: auto; flex-shrink: 0; font-family: var(--mono); font-size: 10px; color: #B04040; background: rgba(180,60,60,0.07); border: 1px solid rgba(180,60,60,0.12); padding: 3px 8px; border-radius: 4px; align-self: center; }
+  .after-time-tag { margin-left: auto; flex-shrink: 0; font-family: var(--mono); font-size: 10px; color: var(--forest-muted); background: rgba(29,78,62,0.07); border: 1px solid rgba(29,78,62,0.12); padding: 3px 8px; border-radius: 4px; align-self: center; }
+  .ba-total { margin-top: 16px; padding: 14px 16px; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; }
+  .ba-card.before .ba-total { background: rgba(180,60,60,0.05); border: 1px solid rgba(180,60,60,0.1); }
+  .ba-card.after .ba-total { background: rgba(29,78,62,0.06); border: 1px solid rgba(29,78,62,0.12); }
+  .ba-total-label { font-size: 13px; font-weight: 500; color: var(--text-darkest); }
+  .ba-total-time { font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+  .ba-card.before .ba-total-time { color: #B04040; } .ba-card.after .ba-total-time { color: var(--forest); }
+  .ba-saving { grid-column: 1 / -1; background: var(--forest); border-radius: 12px; padding: 20px 28px; display: flex; align-items: center; justify-content: space-between; }
+  .ba-saving-text { font-size: 15px; color: rgba(255,255,255,0.75); }
+  .ba-saving-text strong { color: #fff; font-weight: 600; }
+  .ba-saving-stat { font-family: var(--display); font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+  .ba-saving-stat span { font-family: var(--mono); font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.5); margin-left: 8px; vertical-align: middle; }
+
+  /* \u2500\u2500 ORDINANCES \u2500\u2500 */
+  .ordinance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .ordinance-list { display: flex; flex-direction: column; gap: 10px; }
+  .ord-item { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; transition: border-color 0.2s, box-shadow 0.2s; cursor: default; }
+  .ord-item:hover { border-color: var(--forest-muted); box-shadow: 0 4px 16px rgba(29,78,62,0.07); }
+  .ord-name { font-size: 14px; font-weight: 500; color: var(--text-darkest); }
+  .ord-code { font-family: var(--mono); font-size: 11px; color: var(--text-tertiary); margin-top: 3px; }
+  .ord-check { width: 24px; height: 24px; border-radius: 50%; background: rgba(29,78,62,0.06); border: 1px solid rgba(29,78,62,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .btn-light { display: inline-flex; align-items: center; gap: 8px; background: var(--forest); color: #fff; padding: 13px 24px; border-radius: 8px; font-size: 14px; font-weight: 500; text-decoration: none; transition: background 0.2s, transform 0.15s; border: none; cursor: pointer; font-family: var(--body); }
+  .btn-light:hover { background: var(--forest-light); transform: translateY(-1px); }
+
+  /* \u2500\u2500 TESTIMONIALS \u2500\u2500 */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 60px; }
+  .testimonial { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 30px; transition: border-color 0.2s, box-shadow 0.2s; }
+  .testimonial:hover { border-color: var(--border-mid); box-shadow: 0 8px 24px rgba(10,10,9,0.05); }
+  .testimonial-quote { font-size: 15px; line-height: 1.75; color: var(--text-secondary); margin-bottom: 28px; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--forest); display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); flex-shrink: 0; }
+  .author-name { font-size: 14px; font-weight: 600; color: var(--text-darkest); }
+  .author-creds { font-family: var(--mono); font-size: 10px; color: var(--text-tertiary); margin-top: 2px; letter-spacing: 0.05em; }
+
+  /* \u2500\u2500 TRUST / DATA PRIVACY \u2500\u2500 */
+  .privacy-section { padding: 80px 48px; background: var(--bg); border-top: 1px solid var(--border); }
+  .privacy-inner { max-width: 1200px; margin: 0 auto; }
+  .privacy-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 48px; }
+  .privacy-card { padding: 28px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; }
+  .privacy-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(29,78,62,0.06); border: 1px solid rgba(29,78,62,0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .privacy-title { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--text-darkest); margin-bottom: 8px; letter-spacing: -0.2px; }
+  .privacy-text { font-size: 14px; line-height: 1.65; color: var(--text-secondary); }
+
+  /* \u2500\u2500 LIABILITY STATEMENT \u2500\u2500 */
+  .liability-bar { background: rgba(29,78,62,0.04); border: 1px solid rgba(29,78,62,0.1); border-radius: 12px; padding: 24px 32px; margin-top: 40px; display: flex; align-items: flex-start; gap: 20px; }
+  .liability-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--forest); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .liability-title { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--text-darkest); margin-bottom: 6px; }
+  .liability-text { font-size: 14px; line-height: 1.7; color: var(--text-secondary); }
+  .liability-text strong { color: var(--text-darkest); font-weight: 600; }
+
+  /* \u2500\u2500 PRICING \u2500\u2500 */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 60px; }
+  .pricing-card { background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 36px; position: relative; }
+  .pricing-card.featured { background: var(--forest); border-color: var(--forest); box-shadow: 0 8px 40px rgba(29,78,62,0.25); }
+  .featured-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--forest-muted); color: rgba(255,255,255,0.9); font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; white-space: nowrap; }
+  .plan-name { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 16px; }
+  .pricing-card.featured .plan-name { color: rgba(255,255,255,0.45); }
+  .plan-price { font-family: var(--display); font-size: 44px; font-weight: 700; color: var(--text-darkest); letter-spacing: -1.5px; margin-bottom: 4px; }
+  .pricing-card.featured .plan-price { color: #fff; }
+  .plan-per { font-size: 13px; color: var(--text-tertiary); margin-bottom: 8px; }
+  .pricing-card.featured .plan-per { color: rgba(255,255,255,0.4); }
+  .plan-guarantee { font-size: 12px; color: var(--forest-muted); margin-bottom: 24px; font-weight: 500; }
+  .pricing-card.featured .plan-guarantee { color: rgba(255,255,255,0.55); }
+  .plan-divider { height: 1px; background: var(--border); margin-bottom: 24px; }
+  .pricing-card.featured .plan-divider { background: rgba(255,255,255,0.12); }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .plan-features li { font-size: 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; }
+  .pricing-card.featured .plan-features li { color: rgba(255,255,255,0.7); }
+  .feat-check { width: 18px; height: 18px; border-radius: 4px; background: rgba(29,78,62,0.07); border: 1px solid rgba(29,78,62,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .pricing-card.featured .feat-check { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.15); }
+  .plan-btn { width: 100%; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; border: 1px solid var(--border); background: transparent; color: var(--text-dark); text-align: center; font-family: var(--body); }
+  .plan-btn:hover { border-color: var(--forest); color: var(--forest); }
+  .pricing-card.featured .plan-btn { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.2); color: #fff; }
+  .pricing-card.featured .plan-btn:hover { background: rgba(255,255,255,0.22); }
+
+  /* \u2500\u2500 FAQ \u2500\u2500 */
+  .faq-list { display: flex; flex-direction: column; gap: 0; margin-top: 60px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q { width: 100%; text-align: left; padding: 24px 28px; background: var(--bg); border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 20px; transition: background 0.2s; font-family: var(--body); }
+  .faq-q:hover { background: var(--bg-card); }
+  .faq-q-text { font-size: 16px; font-weight: 600; color: var(--text-darkest); text-align: left; }
+  .faq-icon { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
+  .faq-item.open .faq-icon { background: var(--forest); border-color: var(--forest); transform: rotate(45deg); }
+  .faq-a { display: none; padding: 0 28px 24px; background: var(--bg-card); }
+  .faq-item.open .faq-a { display: block; }
+  .faq-a p { font-size: 15px; line-height: 1.7; color: var(--text-secondary); }
+  .faq-a strong { color: var(--text-darkest); font-weight: 600; }
+
+  /* \u2500\u2500 CTA \u2500\u2500 */
+  .cta-section { background: var(--dark-bg); padding: 140px 48px; text-align: center; position: relative; overflow: hidden; }
+  .cta-glow { position: absolute; width: 700px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(29,78,62,0.22) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+  .cta-top-fade { position: absolute; top: 0; left: 0; right: 0; height: 80px; background: linear-gradient(to bottom, var(--bg-subtle), transparent); pointer-events: none; z-index: 1; }
+  .spots-indicator { display: inline-flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--dark-border-mid); border-radius: 100px; padding: 8px 16px; margin-bottom: 32px; }
+  .spots-track { width: 80px; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .spots-fill { height: 100%; width: 70%; background: var(--forest-glow); border-radius: 2px; }
+  .spots-text { font-family: var(--mono); font-size: 11px; color: var(--dark-text-mid); letter-spacing: 0.05em; }
+  .spots-text strong { color: var(--dark-text-light); }
+  .cta-inner { position: relative; z-index: 2; max-width: 620px; margin: 0 auto; }
+  .cta-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--forest-bright); margin-bottom: 20px; }
+  .cta-title { font-family: var(--display); font-size: clamp(34px, 4vw, 52px); font-weight: 700; color: var(--dark-text-white); letter-spacing: -1.5px; line-height: 1.08; margin-bottom: 18px; }
+  .cta-sub { font-size: 17px; line-height: 1.65; color: var(--dark-text-mid); margin-bottom: 40px; }
+  .cta-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .btn-white { background: #fff; color: var(--forest); padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; font-family: var(--body); }
+  .btn-white:hover { background: rgba(255,255,255,0.9); transform: translateY(-1px); }
+  .btn-outline-white { border: 1px solid var(--dark-border-mid); color: var(--dark-text-mid); padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 500; text-decoration: none; transition: all 0.2s; }
+  .btn-outline-white:hover { border-color: rgba(255,255,255,0.25); color: var(--dark-text-white); }
+
+  /* \u2500\u2500 FOOTER \u2500\u2500 */
+  footer { background: var(--dark-bg); padding: 48px; border-top: 1px solid var(--dark-border); }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: var(--display); font-weight: 700; font-size: 16px; color: var(--dark-text-white); margin-bottom: 6px; }
+  .footer-logo span { color: var(--forest-glow); }
+  .footer-note { font-family: var(--mono); font-size: 11px; color: var(--dark-text-dim); letter-spacing: 0.06em; }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { font-size: 13px; color: var(--dark-text-mid); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--dark-text-white); }
+
+  /* \u2500\u2500 EMAIL CAPTURE MODAL \u2500\u2500 */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(10,10,9,0.75); backdrop-filter: blur(8px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 48px; max-width: 480px; width: 90%; position: relative; transform: translateY(16px); transition: transform 0.3s ease; box-shadow: 0 32px 80px rgba(0,0,0,0.3); }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-close { position: absolute; top: 20px; right: 20px; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-tertiary); font-size: 16px; transition: all 0.2s; font-family: var(--body); }
+  .modal-close:hover { background: var(--bg-subtle); color: var(--text-darkest); }
+  .modal-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--forest-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .modal-eyebrow::before { content: ''; display: block; width: 18px; height: 1px; background: var(--forest-muted); }
+  .modal-title { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--text-darkest); letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.1; }
+  .modal-sub { font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 32px; }
+  .modal-field { margin-bottom: 16px; }
+  .modal-field label { display: block; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-tertiary); margin-bottom: 6px; }
+  .modal-field input, .modal-field select { width: 100%; padding: 11px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text-darkest); font-family: var(--body); transition: border-color 0.2s; outline: none; appearance: none; }
+  .modal-field input:focus, .modal-field select:focus { border-color: var(--forest-muted); }
+  .modal-field input::placeholder { color: var(--text-tertiary); }
+  .modal-submit { width: 100%; padding: 14px; background: var(--forest); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: var(--body); transition: background 0.2s, transform 0.15s; margin-top: 8px; }
+  .modal-submit:hover { background: var(--forest-light); transform: translateY(-1px); }
+  .modal-note { font-size: 12px; color: var(--text-tertiary); text-align: center; margin-top: 14px; line-height: 1.5; }
+
+  /* Success state */
+  .modal-success { display: none; text-align: center; padding: 20px 0; }
+  .modal-success.show { display: block; }
+  .modal-form.hide { display: none; }
+  .success-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(29,78,62,0.08); border: 1px solid rgba(29,78,62,0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+  .success-title { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--text-darkest); margin-bottom: 8px; }
+  .success-sub { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* \u2500\u2500 ANIMATIONS \u2500\u2500 */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-content > * { animation: fadeUp 0.7s ease both; }
+  .hero-eyebrow { animation-delay: 0.1s; } .hero h1 { animation-delay: 0.2s; } .hero-sub { animation-delay: 0.3s; } .hero-actions { animation-delay: 0.4s; }
+  .social-proof { animation: fadeUp 0.7s 0.5s ease both; opacity: 0; }
+  .hero-card { animation: fadeUp 0.8s 0.3s ease both; }
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- EMAIL CAPTURE MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">\u2715</button>
+    <div class="modal-form" id="modalForm">
+      <div class="modal-eyebrow">Beta access &middot; 3 spots left</div>
+      <div class="modal-title">Request your spot.</div>
+      <p class="modal-sub">ISA certification required. We'll reach out within 48 hours to confirm your access and onboard you personally.</p>
+      <div class="modal-field">
+        <label>Full name</label>
+        <input type="text" placeholder="Your name" id="inputName">
+      </div>
+      <div class="modal-field">
+        <label>Email address</label>
+        <input type="email" placeholder="you@yourcompany.com" id="inputEmail">
+      </div>
+      <div class="modal-field">
+        <label>Primary city you work in</label>
+        <select id="inputCity">
+          <option value="" disabled selected>Select a city</option>
+          <option>Palo Alto</option>
+          <option>Menlo Park</option>
+          <option>Atherton</option>
+          <option>Los Altos</option>
+          <option>Los Altos Hills</option>
+          <option>Redwood City</option>
+          <option>Sunnyvale</option>
+          <option>Mountain View</option>
+          <option>Cupertino</option>
+          <option>Portola Valley</option>
+          <option>Woodside</option>
+          <option>Other Peninsula city</option>
+        </select>
+      </div>
+      <div class="modal-field">
+        <label>ISA Certification number (optional)</label>
+        <input type="text" placeholder="e.g. WC-1234A" id="inputISA">
+      </div>
+      <button class="modal-submit" onclick="submitModal()">Request Beta Access \u2192</button>
+      <p class="modal-note">No credit card required. Free during beta. We don't sell or share your data.</p>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <div class="success-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-9" stroke="#1D4E3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="success-title">You're on the list.</div>
+      <p class="success-sub">We'll reach out to <strong id="confirmedEmail"></strong> within 48 hours to confirm your access and walk you through the platform personally.</p>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo"><span>Tree</span>Certify</a>
+  <ul>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#comparison">Before &amp; After</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal(event)">Request Beta Access</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-layout">
+    <div class="hero-content">
+      <div class="hero-eyebrow">For ISA-Certified Arborists</div>
+      <h1>The right<br>ordinances.<br><em>Every time.</em></h1>
+      <p class="hero-sub">Your ISA credential is on the line every time you submit a permit report. TreeCertify matches the exact ordinances for every Peninsula municipality &mdash; so your reports are correct before they leave your desk.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="openModal(event)">
+          Request Beta Access
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5H12.5M12.5 7.5L8.5 3.5M12.5 7.5L8.5 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="#comparison" class="btn-ghost">See the difference <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1.5v10M6.5 11.5L2.5 7.5M6.5 11.5L10.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="social-proof">
+        <div class="sp-avatars">
+          <div class="sp-avatar">MR</div><div class="sp-avatar">SL</div><div class="sp-avatar">DK</div><div class="sp-avatar">JT</div><div class="sp-avatar">+6</div>
+        </div>
+        <div class="sp-text"><strong>10 ISA-certified arborists</strong> committed to beta<br>across Palo Alto, Menlo Park &amp; Redwood City</div>
+      </div>
+    </div>
+
+    <div class="hero-card" id="heroCard">
+      <div class="card-header">
+        <div class="card-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="card-label-mono" id="cardStepLabel">STEP 1 OF 3 &middot; ENTER DATA</div>
+      </div>
+      <div class="card-step active" id="step1">
+        <div class="permit-row">
+          <div><div class="permit-label">Municipality</div><div class="permit-value">City of Palo Alto</div></div>
+          <div style="text-align:right"><div class="permit-label">Report Type</div><div class="permit-value">Tree Removal</div></div>
+        </div>
+        <div class="field-row"><div class="field-label">Species</div><div class="field-value">Quercus agrifolia (Coast Live Oak) <span>MATCHED</span></div></div>
+        <div class="field-row"><div class="field-label">DBH</div><div class="field-value">24 inches <span>PROTECTED</span></div></div>
+        <div class="field-row"><div class="field-label">Condition</div><div class="field-value">Fair &mdash; moderate decay at root flare <span>FAIR</span></div></div>
+        <div class="field-row"><div class="field-label">Site Address</div><div class="field-value">123 Evergreen Ave, Palo Alto</div></div>
+      </div>
+      <div class="card-step" id="step2">
+        <div class="tree-spec">Quercus agrifolia &middot; 24" DBH &middot; Fair condition<br>Heritage-designated &middot; Protected under \u00a78.10.020<br>123 Evergreen Ave &middot; APN 123-45-678</div>
+        <div class="ai-block">
+          <div class="ai-label-row">
+            <div class="ai-label">AI &mdash; Ordinance Match</div>
+            <div class="ai-thinking" id="aiThinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div>
+          </div>
+          <div class="ai-text" id="aiText"><span class="cursor"></span></div>
+        </div>
+        <div class="badges" id="stepBadges" style="opacity:0;transition:opacity 0.4s;">
+          <div class="badge badge-green">ISA Compliant</div>
+          <div class="badge badge-amber">Heritage Review Required</div>
+          <div class="badge badge-blue">\u00a78.10.075 Applies</div>
+        </div>
+      </div>
+      <div class="card-step" id="step3">
+        <div class="report-preview">
+          <div class="report-section-label">Tree Risk Assessment Report</div>
+          <div class="report-line w100 hl"></div><div class="report-line w80"></div><div class="report-line w90"></div>
+          <div class="report-section-label">Ordinance Compliance</div>
+          <div class="report-line w60 hl"></div><div class="report-line w75"></div><div class="report-line w55"></div>
+          <div class="report-section-label">Arborist Certification</div>
+          <div class="report-line w80 hl"></div><div class="report-line w60"></div>
+        </div>
+        <div style="display:flex;gap:7px;margin-top:12px;">
+          <div class="badge badge-green">\u2713 Report Ready</div><div class="badge badge-green">\u2713 ISA Compliant</div>
+        </div>
+      </div>
+      <div class="card-progress">
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:33%"></div></div>
+        <div class="progress-label" id="progressLabel">Step 1 of 3</div>
+      </div>
+      <div class="card-footer">
+        <div><span class="status-dot"></span><span class="status-text">All content reviewed by you before submission</span></div>
+        <button class="gen-btn" id="nextBtn">Next \u2192</button>
+      </div>
+    </div>
+  </div>
+  <div class="hero-fade"></div>
+</section>
+
+<!-- TRUST BANNER -->
+<div class="trust-banner">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l1.5 4.5H15l-3.75 2.75L12.75 14 9 11.25 5.25 14l1.5-4.75L3 6.5h4.5L9 2z" stroke="#1D4E3E" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+      <div class="trust-text"><strong>ISA Standards Compliant</strong>Report output meets ISA Tree Risk Assessment standards</div>
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <div class="trust-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2.5C6.5 4 4 4.5 2.5 4.5c0 5.5 2.5 9 6.5 11 4-2 6.5-5.5 6.5-11C14 4.5 11.5 4 9 2.5z" stroke="#1D4E3E" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+      <div class="trust-text"><strong>You certify, not the AI</strong>Every word reviewed by you before submission</div>
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <div class="trust-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="7" width="12" height="9" rx="2" stroke="#1D4E3E" stroke-width="1.3"/><path d="M6 7V5a3 3 0 016 0v2" stroke="#1D4E3E" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+      <div class="trust-text"><strong>Your data stays yours</strong>Reports never shared or used to train models</div>
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <div class="trust-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 9a3 3 0 100-6 3 3 0 000 6zM3 15.5c0-3 2.7-5.5 6-5.5s6 2.5 6 5.5" stroke="#1D4E3E" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+      <div class="trust-text"><strong>Built by arborists</strong>Designed with 10 ISA-certified arborists from day one</div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item reveal"><div class="stat-num">90<span>%</span></div><div class="stat-desc">Time saved per permit report</div></div>
+    <div class="stat-item reveal"><div class="stat-num">12</div><div class="stat-desc">Peninsula municipalities covered</div></div>
+    <div class="stat-item reveal"><div class="stat-num">100<span>%</span></div><div class="stat-desc">ISA standards compliant output</div></div>
+    <div class="stat-item reveal"><div class="stat-num">10</div><div class="stat-desc">Beta arborists already committed</div></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-inner">
+    <div class="section-label reveal">How it works</div>
+    <h2 class="section-title reveal">Three steps. One compliant report.</h2>
+    <p class="section-sub reveal">Built around the way you already work in the field. No new workflows to learn.</p>
+    <div class="steps reveal">
+      <div class="step"><div class="step-num">01 &mdash; INPUT</div><div class="step-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#1D4E3E" stroke-width="1.5"/><path d="M10 7v3l2.5 2.5" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Enter tree data</h3><p>Species, DBH, condition, and site address. The same data you collect in the field &mdash; entered once.</p></div>
+      <div class="step"><div class="step-num">02 &mdash; MATCH</div><div class="step-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h10M3 15h7" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Ordinances auto-matched</h3><p>TreeCertify identifies the exact code sections that apply &mdash; Palo Alto, Menlo Park, Atherton, and more.</p></div>
+      <div class="step"><div class="step-num">03 &mdash; CERTIFY</div><div class="step-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4.5 4.5 7.5-9" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Review and submit</h3><p>Every word is yours to review before it leaves. TreeCertify assists &mdash; you certify.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="section-subtle" id="comparison">
+  <div class="section-inner">
+    <div class="section-label reveal">Before &amp; After</div>
+    <h2 class="section-title reveal">2 hours becomes 10 minutes.</h2>
+    <p class="section-sub reveal">Here's what writing a tree removal permit report actually takes &mdash; and what it takes now.</p>
+    <div class="ba-grid">
+      <div class="ba-card before reveal">
+        <div class="ba-card-header"><div class="ba-tag">Before TreeCertify</div><div class="ba-time">~2 hrs per report</div></div>
+        <div class="ba-body">
+          <div class="before-item"><div class="before-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2v10" stroke="#B04040" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/></svg></div><div><div class="item-title">Track down the city's ordinance page</div><div class="item-sub">Find the right chapter of the municipal code, if you even know which site to start on</div></div><div class="before-time-tag">15&ndash;20 min</div></div>
+          <div class="before-item"><div class="before-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2v10" stroke="#B04040" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/></svg></div><div><div class="item-title">Read through and identify what applies</div><div class="item-sub">Heritage flags, DBH thresholds, removal justification &mdash; every city words it differently</div></div><div class="before-time-tag">15&ndash;20 min</div></div>
+          <div class="before-item"><div class="before-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2v10" stroke="#B04040" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/></svg></div><div><div class="item-title">Find a template or dig through old reports</div><div class="item-sub">Copy a prior report, gut the content, reformat to match this city's requirements</div></div><div class="before-time-tag">10&ndash;15 min</div></div>
+          <div class="before-item"><div class="before-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2v10" stroke="#B04040" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/></svg></div><div><div class="item-title">Write the report from scratch</div><div class="item-sub">Weave in the right citations, structure the justification, get every required field</div></div><div class="before-time-tag">30&ndash;45 min</div></div>
+          <div class="before-item" style="border-bottom:none"><div class="before-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2v10" stroke="#B04040" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/></svg></div><div><div class="item-title">Proofread and cross-reference &mdash; and hope</div><div class="item-sub">One wrong citation, one missed requirement &mdash; rejected submission, back to square one</div></div><div class="before-time-tag">15&ndash;20 min</div></div>
+          <div class="ba-total"><div class="ba-total-label">Total time per report</div><div class="ba-total-time">~2 hrs</div></div>
+        </div>
+      </div>
+      <div class="ba-card after reveal">
+        <div class="ba-card-header"><div class="ba-tag">With TreeCertify</div><div class="ba-time">~10 min per report</div></div>
+        <div class="ba-body">
+          <div class="after-item"><div class="after-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5 6.5-6" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="item-title">Enter tree data once</div><div class="item-sub">Species, DBH, condition, address &mdash; the same info you already have from your site visit</div></div><div class="after-time-tag">2 min</div></div>
+          <div class="after-item"><div class="after-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5 6.5-6" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="item-title">Ordinances matched automatically</div><div class="item-sub">Correct code sections identified instantly &mdash; heritage flags, DBH thresholds, all of it</div></div><div class="after-time-tag">instant</div></div>
+          <div class="after-item"><div class="after-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5 6.5-6" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="item-title">Report drafted to spec</div><div class="item-sub">Compliant first draft generated against the exact city template &mdash; nothing missing</div></div><div class="after-time-tag">1 min</div></div>
+          <div class="after-item" style="border-bottom:none"><div class="after-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5 6.5-6" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="item-title">Review, sign, submit</div><div class="item-sub">You review every word. Your certification, your call &mdash; TreeCertify assists, you certify</div></div><div class="after-time-tag">5 min</div></div>
+          <div class="ba-total"><div class="ba-total-label">Total time per report</div><div class="ba-total-time">~10 min</div></div>
+        </div>
+      </div>
+      <div class="ba-saving reveal">
+        <div class="ba-saving-text">If you write <strong>3 permit reports per week</strong>, TreeCertify gives you back over <strong>250 hours per year</strong> &mdash; time you spend in the field, not at your desk.</div>
+        <div class="ba-saving-stat">250+ hrs<span>saved / year</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDINANCES -->
+<section class="section" id="ordinances">
+  <div class="section-inner">
+    <div class="ordinance-grid">
+      <div>
+        <div class="section-label reveal">Coverage</div>
+        <h2 class="section-title reveal">Built for the Peninsula.</h2>
+        <p class="section-sub reveal">Every municipality has different requirements. TreeCertify knows all of them &mdash; so you don't have to look them up every time.</p>
+        <button class="btn-light reveal" onclick="openModal(event)">Request Beta Access <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <div class="ordinance-list reveal">
+        <div class="ord-item"><div><div class="ord-name">City of Palo Alto</div><div class="ord-code">Municipal Code \u00a78.10.050</div></div><div class="ord-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="ord-item"><div><div class="ord-name">City of Menlo Park</div><div class="ord-code">Tree Preservation Ordinance 16.30</div></div><div class="ord-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="ord-item"><div><div class="ord-name">Town of Atherton</div><div class="ord-code">Chapter 8.10 &mdash; Tree Preservation</div></div><div class="ord-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="ord-item"><div><div class="ord-name">City of Los Altos</div><div class="ord-code">Chapter 6.4 &mdash; Tree Protection</div></div><div class="ord-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="ord-item"><div><div class="ord-name">City of Redwood City</div><div class="ord-code">Urban Forestry Ordinance \u00a77.18</div></div><div class="ord-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="ord-item"><div><div class="ord-name">+ 7 more municipalities</div><div class="ord-code">Sunnyvale, Mountain View, Cupertino...</div></div><div class="ord-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section-subtle">
+  <div class="section-inner">
+    <div class="section-label reveal">Beta arborists</div>
+    <h2 class="section-title reveal">Built with arborists, for arborists.</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial reveal"><p class="testimonial-quote">"I was spending 45 minutes per permit report cross-referencing the municipal code. Now it's 8 minutes, and I'm more confident the report is correct."</p><div class="testimonial-author"><div class="author-avatar">MR</div><div><div class="author-name">Michael R.</div><div class="author-creds">ISA CERTIFIED ARBORIST &middot; PALO ALTO</div></div></div></div>
+      <div class="testimonial reveal"><p class="testimonial-quote">"The ordinance matching is exactly right. It found the heritage-designation requirement I always forget to include. That alone is worth it."</p><div class="testimonial-author"><div class="author-avatar">SL</div><div><div class="author-name">Sarah L.</div><div class="author-creds">ISA CERTIFIED ARBORIST &middot; MENLO PARK</div></div></div></div>
+      <div class="testimonial reveal"><p class="testimonial-quote">"I still review every word before it goes out &mdash; that's non-negotiable. But the first draft is already 90% there. Game changer."</p><div class="testimonial-author"><div class="author-avatar">DK</div><div><div class="author-name">David K.</div><div class="author-creds">ISA CERTIFIED ARBORIST &middot; REDWOOD CITY</div></div></div></div>
+    </div>
+
+    <!-- LIABILITY / CREDIBILITY STATEMENT -->
+    <div class="liability-bar reveal">
+      <div class="liability-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3C7 4.5 4.5 5 3 5c0 6.5 3 10.5 7 13 4-2.5 7-6.5 7-13C15.5 5 13 4.5 10 3z" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 10l2.5 2.5 3.5-4" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div>
+        <div class="liability-title">Your certification. Your judgment. Your report.</div>
+        <p class="liability-text">TreeCertify generates a compliant first draft &mdash; <strong>you review and approve every word before it's submitted</strong>. The AI identifies ordinances and structures the report. You apply your professional expertise, verify the findings, and certify the document. Your ISA credential is never on the line without your explicit review. TreeCertify assists &mdash; it does not replace &mdash; your professional judgment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST / DATA PRIVACY -->
+<section class="privacy-section">
+  <div class="privacy-inner">
+    <div class="section-label reveal">Trust &amp; Privacy</div>
+    <h2 class="section-title reveal">Your reports are yours. Full stop.</h2>
+    <p class="section-sub" style="margin-bottom:0" >We built this for professionals whose reputation depends on the accuracy and confidentiality of their work. Here's exactly how we handle your data.</p>
+    <div class="privacy-grid">
+      <div class="privacy-card reveal">
+        <div class="privacy-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="9" width="12" height="9" rx="2" stroke="#1D4E3E" stroke-width="1.5"/><path d="M7 9V6a3 3 0 016 0v3" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="privacy-title">Reports never leave your account</div>
+        <p class="privacy-text">Your generated reports are stored in your account only. We do not access, share, sell, or transmit them to any third party &mdash; ever.</p>
+      </div>
+      <div class="privacy-card reveal">
+        <div class="privacy-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3l1.8 5.5H17l-4.5 3.3 1.7 5.2L10 14l-4.2 3 1.7-5.2L3 8.5h5.2L10 3z" stroke="#1D4E3E" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+        <div class="privacy-title">Not used to train AI models</div>
+        <p class="privacy-text">Your report data, tree data, and client information are never used to train or improve any AI model &mdash; ours or anyone else's.</p>
+      </div>
+      <div class="privacy-card reveal">
+        <div class="privacy-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3C7 4.5 4.5 5 3 5c0 6.5 3 10.5 7 13 4-2.5 7-6.5 7-13C15.5 5 13 4.5 10 3z" stroke="#1D4E3E" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+        <div class="privacy-title">Ordinance data is verified</div>
+        <p class="privacy-text">Municipal ordinances are sourced directly from official city codes and reviewed manually before being added to the system. We flag outdated code and update promptly.</p>
+      </div>
+      <div class="privacy-card reveal">
+        <div class="privacy-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M10 3v14" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="privacy-title">Cancel anytime, keep your data</div>
+        <p class="privacy-text">No lock-in. If you cancel, you can export all your reports in PDF format. We don't hold your work hostage.</p>
+      </div>
+      <div class="privacy-card reveal">
+        <div class="privacy-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#1D4E3E" stroke-width="1.5"/><path d="M10 7v3l2 2" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="privacy-title">Audit trail on every report</div>
+        <p class="privacy-text">Every report includes a timestamped record of what was AI-generated vs. what you edited. Full transparency for your records.</p>
+      </div>
+      <div class="privacy-card reveal">
+        <div class="privacy-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="privacy-title">You are always the author</div>
+        <p class="privacy-text">Reports are certified by you, under your ISA credential. TreeCertify's name never appears on a submitted report &mdash; it's your professional document.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section-subtle" id="pricing">
+  <div class="section-inner">
+    <div class="section-label reveal">Pricing</div>
+    <h2 class="section-title reveal">Free during beta. Simple after.</h2>
+    <p class="section-sub reveal">Beta access is completely free. No credit card, no commitment. Founding arborists get a permanent discount when paid plans launch.</p>
+    <div class="pricing-grid" style="grid-template-columns: 1fr 1fr; max-width: 760px;">
+
+      <div class="pricing-card featured reveal" style="position:relative;">
+        <div class="featured-badge">You are here</div>
+        <div class="plan-name">Beta Access</div>
+        <div class="plan-price">$0</div>
+        <div class="plan-per">Free for 3 months</div>
+        <div class="plan-guarantee">No credit card &middot; No commitment</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Full platform access</li>
+          <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>All 12 Peninsula municipalities</li>
+          <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Unlimited permit reports</li>
+          <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Direct line to the founding team</li>
+          <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Shape the roadmap with your feedback</li>
+        </ul>
+        <button class="plan-btn" onclick="openModal(event)">Request Beta Access &rarr;</button>
+      </div>
+
+      <div class="pricing-card reveal" style="display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <div class="plan-name">Professional</div>
+          <div class="plan-price" style="font-size:32px; letter-spacing:-1px; color: var(--text-secondary);">Coming soon</div>
+          <div class="plan-per">Paid tier &mdash; launching after beta</div>
+          <div class="plan-guarantee" style="color:var(--forest-muted);">Founding members get a permanent 30% discount</div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Everything in beta, plus</li>
+            <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Report history &amp; dashboard</li>
+            <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Expanding municipality coverage</li>
+            <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Additional report types</li>
+          </ul>
+        </div>
+        <div>
+          <div style="background: rgba(29,78,62,0.05); border:1px solid rgba(29,78,62,0.1); border-radius:8px; padding:14px 16px; margin-bottom:16px;">
+            <div style="font-family:var(--mono); font-size:10px; color:var(--forest-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:4px;">Founding member benefit</div>
+            <div style="font-size:13px; color:var(--text-darkest); font-weight:500;">Join beta now &rarr; lock in 30% off forever when paid plans launch</div>
+          </div>
+          <button class="plan-btn" onclick="openModal(event)" style="width:100%">Get founding member access</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="section-inner">
+    <div class="section-label reveal">FAQ</div>
+    <h2 class="section-title reveal">Questions arborists actually ask.</h2>
+    <p class="section-sub reveal">We built this with ISA-certified arborists from the start. These are the questions they asked first.</p>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">Does this replace my professional judgment?</span>
+          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </button>
+        <div class="faq-a"><p>No &mdash; and we designed it specifically to prevent that. <strong>You review and approve every word before anything is submitted.</strong> TreeCertify drafts the report structure and identifies the applicable ordinances. You apply your field expertise, verify the findings, and certify the document under your ISA credential. The AI is a first-draft assistant, not a replacement for your professional judgment.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">What if the AI gets an ordinance wrong?</span>
+          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </button>
+        <div class="faq-a"><p>Our ordinance database is sourced directly from official municipal codes and reviewed manually &mdash; not scraped or AI-generated. That said, <strong>you are always the final check.</strong> Every ordinance citation includes a direct link to the source code so you can verify it in one click. If you catch an error, you can flag it and we correct the database within 24 hours.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">What if my city isn't on the list yet?</span>
+          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </button>
+        <div class="faq-a"><p>We're starting with 12 Peninsula municipalities and expanding based on beta arborist demand. <strong>Tell us which cities you work in most</strong> and we'll prioritize them in the next release. During beta, every city request gets a direct response &mdash; this isn't an auto-reply form.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">Who owns the report once it's generated?</span>
+          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </button>
+        <div class="faq-a"><p><strong>You do. Completely.</strong> Reports are your professional documents, certified under your ISA credential. TreeCertify's name never appears on a submitted report. We have no claim on your work product and never will. If you cancel, you export everything and it's yours.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">Is my client data secure?</span>
+          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </button>
+        <div class="faq-a"><p>Yes. Your report data, client information, and tree data are stored in your account only. <strong>We do not share, sell, or transmit your data to any third party.</strong> We also don't use your data to train any AI model. See our full privacy section above for specifics.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">How long does beta access last?</span>
+          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </button>
+        <div class="faq-a"><p>Beta is free for the first 3 months. After that, founding beta arborists get a <strong>permanent 30% discount</strong> on any paid plan &mdash; our thank-you for helping shape the product. We'll give you at least 30 days notice before any pricing changes.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text">Does it work for report types other than tree removal?</span>
+          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </button>
+        <div class="faq-a"><p>The initial beta focuses on tree removal permit reports &mdash; that's where arborists spend the most time per report. <strong>Tree risk assessments, construction impact reports, and pruning specifications</strong> are next on the roadmap, with timing driven by beta feedback.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-top-fade"></div>
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Limited beta &middot; Peninsula arborists only</div>
+    <div class="spots-indicator">
+      <div class="spots-track"><div class="spots-fill"></div></div>
+      <div class="spots-text"><strong>7 of 10</strong> beta spots filled</div>
+    </div>
+    <h2 class="cta-title reveal">3 spots left.<br>Join the beta.</h2>
+    <p class="cta-sub reveal">Free for 3 months. Founding arborists get a permanent 30% discount after. ISA certification required.</p>
+    <div class="cta-actions reveal">
+      <button class="btn-white" onclick="openModal(event)">Request Beta Access</button>
+      <a href="/cdn-cgi/l/email-protection#68000d040407281c1a0d0d0b0d1a1c010e11460b0705" class="btn-outline-white"><span class="__cf_email__" data-cfemail="e088858c8c8fa09492858583859294898699ce838f8d">[email&#160;protected]</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><span>Tree</span>Certify</div>
+      <div class="footer-note">\u00a9 2025 TreeCertify LLC &middot; Built for ISA-Certified Arborists</div>
+    </div>
+    <div class="footer-links">
+      <a href="#">Privacy</a><a href="#">Terms</a><a href="#faq">FAQ</a><a href="/cdn-cgi/l/email-protection#741c1118181b3400061111171106001d120d5a171b19">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // \u2500\u2500 MODAL \u2500\u2500
+  function openModal(e) { e.preventDefault(); document.getElementById('modal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal() { document.getElementById('modal').classList.remove('open'); document.body.style.overflow = ''; }
+  document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  function submitModal() {
+    const name = document.getElementById('inputName').value.trim();
+    const email = document.getElementById('inputEmail').value.trim();
+    const isa = document.getElementById('inputISA').value.trim();
+    const city = document.getElementById('inputCity').value.trim();
+    if (!name || !email || !city) { alert('Please fill in your name, email, and city.'); return; }
+
+    const btn = document.querySelector('.modal-submit');
+    btn.textContent = 'Submitting…';
+    btn.disabled = true;
+
+    const formId = '1FAIpQLSfUOKukx08c990IUOL8awkG8VrS4qGKXy0iIccc_B67nuv9Dw';
+    const params = new URLSearchParams();
+    params.append('entry.674258843', name);
+    params.append('entry.2081777311', email);
+    params.append('entry.622601832', isa);
+    params.append('entry.1096619862', city);
+
+    fetch(`https://docs.google.com/forms/d/e/${formId}/formResponse`, {
+      method: 'POST',
+      body: params.toString(),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      mode: 'no-cors'
+    }).finally(() => {
+      document.getElementById('confirmedEmail').textContent = email;
+      document.getElementById('modalForm').classList.add('hide');
+      document.getElementById('modalSuccess').classList.add('show');
+    });
+  }
+
+  // \u2500\u2500 CARD ANIMATION \u2500\u2500
+  let currentStep = 1;
+  const labels = ['STEP 1 OF 3 &middot; ENTER DATA', 'STEP 2 OF 3 &middot; AI MATCHING', 'STEP 3 OF 3 &middot; REPORT READY'];
+  const progressWidths = ['33%', '66%', '100%'];
+  const progressTexts = ['Step 1 of 3', 'Step 2 of 3', 'Complete'];
+  const btnLabels = ['Next \u2192', 'Generate Report \u2192', 'Start Over \u21ba'];
+  const aiFullText = 'Palo Alto Municipal Code \u00a78.10.050 requires a certified arborist report documenting condition, species, DBH, and removal justification. Heritage-designated tree requires additional findings per \u00a78.10.075.';
+
+  function showStep(n) {
+    document.querySelectorAll('.card-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + n).classList.add('active');
+    document.getElementById('cardStepLabel').textContent = labels[n - 1];
+    document.getElementById('progressFill').style.width = progressWidths[n - 1];
+    document.getElementById('progressLabel').textContent = progressTexts[n - 1];
+    document.getElementById('nextBtn').textContent = btnLabels[n - 1];
+    if (n === 2) startTypewriter();
+  }
+
+  let typewriterTimer = null;
+  function startTypewriter() {
+    const el = document.getElementById('aiText');
+    const thinking = document.getElementById('aiThinking');
+    const badges = document.getElementById('stepBadges');
+    el.innerHTML = '<span class="cursor"></span>';
+    badges.style.opacity = '0';
+    thinking.style.display = 'flex';
+    let i = 0;
+    clearTimeout(typewriterTimer);
+    setTimeout(() => {
+      thinking.style.display = 'none';
+      function type() {
+        if (i <= aiFullText.length) {
+          el.innerHTML = aiFullText.slice(0, i).replace('Palo Alto Municipal Code \u00a78.10.050', '<strong>Palo Alto Municipal Code \u00a78.10.050</strong>').replace('\u00a78.10.075', '<strong>\u00a78.10.075</strong>') + '<span class="cursor"></span>';
+          i++;
+          typewriterTimer = setTimeout(type, 22);
+        } else {
+          el.innerHTML = aiFullText.replace('Palo Alto Municipal Code \u00a78.10.050', '<strong>Palo Alto Municipal Code \u00a78.10.050</strong>').replace('\u00a78.10.075', '<strong>\u00a78.10.075</strong>');
+          badges.style.opacity = '1';
+        }
+      }
+      type();
+    }, 900);
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    currentStep = currentStep < 3 ? currentStep + 1 : 1;
+    showStep(currentStep);
+  });
+  setTimeout(() => { if (currentStep === 1) { currentStep = 2; showStep(2); } }, 4000);
+
+  // \u2500\u2500 FAQ \u2500\u2500
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // \u2500\u2500 SCROLL REVEAL \u2500\u2500
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+       if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
