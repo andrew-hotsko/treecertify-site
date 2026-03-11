@@ -936,8 +936,8 @@
       <div class="footer-note">&copy; 2026 TreeCertify LLC &middot; Built for ISA-Certified Arborists</div>
     </div>
     <div class="footer-links">
-      <a href="mailto:hello@treecertify.com?subject=Privacy%20Policy%20Request">Privacy</a>
-      <a href="mailto:hello@treecertify.com?subject=Terms%20of%20Service%20Request">Terms</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
       <a href="#faq">FAQ</a>
       <a href="mailto:hello@treecertify.com">Contact</a>
     </div>
@@ -1010,6 +1010,15 @@
 
     document.body.appendChild(form);
     form.submit();
+
+    // Track conversion in Google Analytics
+    if (typeof gtag === 'function') {
+      gtag('event', 'beta_signup', {
+        event_category: 'conversion',
+        event_label: city || 'unknown_city',
+        value: 1
+      });
+    }
 
     // Clean up and show success after a short delay
     setTimeout(function() {
