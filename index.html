@@ -16,6 +16,14 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="TreeCertify — AI Permit Reports for ISA Arborists">
 <meta name="twitter:description" content="Match municipal ordinances and generate compliant permit reports in minutes. Built for ISA-certified arborists on the SF Peninsula.">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8PGRKCNMHH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8PGRKCNMHH');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -1074,5 +1082,10 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
+
+<!-- Vercel Web Analytics -->
+<script defer src="/_vercel/insights/script.js"></script>
+<!-- Vercel Speed Insights -->
+<script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
