@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TreeCertify &mdash; The Right Ordinances. Every Permit. Every City.</title>
+<meta name="description" content="AI-powered permit reporting for ISA-certified arborists. TreeCertify matches municipal ordinances and generates compliant reports in minutes, not hours. Built for the SF Peninsula.">
+<link rel="canonical" href="https://www.treecertify.com/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>🌲</text></svg>">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.treecertify.com/">
+<meta property="og:title" content="TreeCertify — AI Permit Reports for ISA Arborists">
+<meta property="og:description" content="Match municipal ordinances and generate compliant permit reports in minutes. Built for ISA-certified arborists on the SF Peninsula.">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TreeCertify — AI Permit Reports for ISA Arborists">
+<meta name="twitter:description" content="Match municipal ordinances and generate compliant permit reports in minutes. Built for ISA-certified arborists on the SF Peninsula.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -345,6 +357,114 @@
   .hero-card { animation: fadeUp 0.8s 0.3s ease both; }
   .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── HAMBURGER BUTTON ── */
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; z-index: 101; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--dark-text-white); margin: 5px 0; border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     RESPONSIVE: TABLET (max-width: 1024px)
+     ══════════════════════════════════════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    nav { padding: 0 24px; }
+    .hero { padding: 100px 24px 80px; }
+    .hero-layout { grid-template-columns: 1fr; gap: 40px; }
+    .hero-card { max-width: 520px; }
+    .section, .section-subtle { padding: 80px 24px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); padding: 0 24px; }
+    .stat-item { padding: 32px 24px; }
+    .stat-item:nth-child(2) { border-right: none; }
+    .steps { grid-template-columns: 1fr; }
+    .ba-grid { grid-template-columns: 1fr; }
+    .ordinance-grid { grid-template-columns: 1fr; gap: 40px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .privacy-grid { grid-template-columns: 1fr 1fr; }
+    .pricing-grid { grid-template-columns: 1fr !important; max-width: 480px !important; }
+    .trust-banner { padding: 24px; }
+    .trust-inner { flex-wrap: wrap; gap: 20px; justify-content: center; }
+    .trust-divider { display: none; }
+    .cta-section { padding: 80px 24px; }
+    .privacy-section { padding: 60px 24px; }
+    .liability-bar { flex-direction: column; padding: 20px; }
+    footer { padding: 32px 24px; }
+    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     RESPONSIVE: MOBILE (max-width: 768px)
+     ══════════════════════════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .hamburger { display: block; }
+    nav ul { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: rgba(12,13,11,0.97); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 32px; padding: 40px; z-index: 99; }
+    nav ul.open { display: flex; }
+    nav ul a { font-size: 18px; }
+    .nav-cta { padding: 14px 32px !important; font-size: 16px !important; }
+
+    .hero { padding: 90px 20px 60px; min-height: auto; }
+    .hero h1 { font-size: clamp(32px, 8vw, 46px); letter-spacing: -1px; }
+    .hero-sub { font-size: 16px; }
+    .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+    .btn-primary, .btn-ghost { justify-content: center; width: 100%; }
+    .social-proof { flex-direction: column; align-items: flex-start; gap: 10px; }
+
+    .section, .section-subtle { padding: 60px 20px; }
+    .section-title { font-size: clamp(24px, 6vw, 34px); }
+    .section-sub { font-size: 15px; margin-bottom: 40px; }
+
+    .stats-inner { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
+    .stat-item { padding: 24px 16px; }
+    .stat-num { font-size: 32px; }
+
+    .step { padding: 28px 20px; }
+
+    .ba-saving { flex-direction: column; gap: 12px; text-align: center; padding: 20px; }
+    .ba-saving-text { font-size: 14px; }
+    .ba-saving-stat { font-size: 24px; }
+    .before-time-tag, .after-time-tag { display: none; }
+
+    .privacy-grid { grid-template-columns: 1fr; }
+    .privacy-section { padding: 48px 20px; }
+
+    .cta-section { padding: 60px 20px; }
+    .cta-title { font-size: clamp(28px, 7vw, 40px); }
+    .cta-actions { flex-direction: column; align-items: stretch; }
+    .btn-white, .btn-outline-white { text-align: center; display: block; }
+
+    .faq-q { padding: 18px 16px; }
+    .faq-q-text { font-size: 14px; }
+    .faq-a { padding: 0 16px 18px; }
+    .faq-a p { font-size: 14px; }
+
+    .modal { padding: 32px 24px; border-radius: 16px; width: 95%; }
+    .modal-title { font-size: 22px; }
+
+    .pricing-card { padding: 28px; }
+    .plan-price { font-size: 36px; }
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     RESPONSIVE: SMALL MOBILE (max-width: 480px)
+     ══════════════════════════════════════════════════════════════════════ */
+  @media (max-width: 480px) {
+    nav { padding: 0 16px; }
+    .hero { padding: 80px 16px 48px; }
+    .hero h1 { font-size: 28px; letter-spacing: -0.5px; }
+    .hero-sub { font-size: 15px; max-width: 100%; }
+    .hero-card { font-size: 12px; }
+    .section, .section-subtle { padding: 48px 16px; }
+    .stats-inner { grid-template-columns: 1fr 1fr; padding: 0 16px; }
+    .stat-num { font-size: 28px; }
+    .stat-desc { font-size: 12px; }
+    .ba-card-header { flex-wrap: wrap; gap: 6px; }
+    .ba-time { margin-left: 0; }
+    .ord-item { padding: 12px 14px; }
+    .trust-inner { flex-direction: column; align-items: flex-start; }
+    footer { padding: 24px 16px; }
+  }
 </style>
 </head>
 <body>
@@ -403,11 +523,14 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="logo"><span>Tree</span>Certify</a>
-  <ul>
-    <li><a href="#how">How it works</a></li>
-    <li><a href="#comparison">Before &amp; After</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#" class="nav-cta" onclick="openModal(event)">Request Beta Access</a></li>
+  <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul id="navMenu">
+    <li><a href="#how" onclick="closeMobileNav()">How it works</a></li>
+    <li><a href="#comparison" onclick="closeMobileNav()">Before &amp; After</a></li>
+    <li><a href="#faq" onclick="closeMobileNav()">FAQ</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal(event); closeMobileNav();">Request Beta Access</a></li>
   </ul>
 </nav>
 
@@ -520,7 +643,7 @@
 <div class="stats-strip">
   <div class="stats-inner">
     <div class="stat-item reveal"><div class="stat-num">90<span>%</span></div><div class="stat-desc">Time saved per permit report</div></div>
-    <div class="stat-item reveal"><div class="stat-num">12</div><div class="stat-desc">Peninsula municipalities covered</div></div>
+    <div class="stat-item reveal"><div class="stat-num">21</div><div class="stat-desc">Municipalities covered</div></div>
     <div class="stat-item reveal"><div class="stat-num">100<span>%</span></div><div class="stat-desc">ISA standards compliant output</div></div>
     <div class="stat-item reveal"><div class="stat-num">10</div><div class="stat-desc">Beta arborists already committed</div></div>
   </div>
@@ -592,7 +715,7 @@
         <div class="ord-item"><div><div class="ord-name">Town of Atherton</div><div class="ord-code">Chapter 8.10 &mdash; Tree Preservation</div></div><div class="ord-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
         <div class="ord-item"><div><div class="ord-name">City of Los Altos</div><div class="ord-code">Chapter 6.4 &mdash; Tree Protection</div></div><div class="ord-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
         <div class="ord-item"><div><div class="ord-name">City of Redwood City</div><div class="ord-code">Urban Forestry Ordinance &sect;7.18</div></div><div class="ord-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-        <div class="ord-item"><div><div class="ord-name">+ 7 more municipalities</div><div class="ord-code">Sunnyvale, Mountain View, Cupertino...</div></div><div class="ord-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="ord-item"><div><div class="ord-name">+ 16 more municipalities</div><div class="ord-code">Mountain View, Hillsborough, San Carlos, Burlingame, Santa Rosa, Reno...</div></div><div class="ord-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#1D4E3E" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
       </div>
     </div>
   </div>
@@ -678,7 +801,7 @@
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Full platform access</li>
-          <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>All 12 Peninsula municipalities</li>
+          <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>All 21 municipalities covered</li>
           <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Unlimited permit reports</li>
           <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Direct line to the founding team</li>
           <li><div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Shape the roadmap with your feedback</li>
@@ -738,7 +861,7 @@
           <span class="faq-q-text">What if my city isn't on the list yet?</span>
           <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         </button>
-        <div class="faq-a"><p>We're starting with 12 Peninsula municipalities and expanding based on beta arborist demand. <strong>Tell us which cities you work in most</strong> and we'll prioritize them in the next release. During beta, every city request gets a direct response &mdash; this isn't an auto-reply form.</p></div>
+        <div class="faq-a"><p>We're starting with 21 municipalities across the Peninsula, North Bay, and Tahoe/Nevada and expanding based on beta arborist demand. <strong>Tell us which cities you work in most</strong> and we'll prioritize them in the next release. During beta, every city request gets a direct response &mdash; this isn't an auto-reply form.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">
@@ -799,14 +922,29 @@
       <div class="footer-note">&copy; 2026 TreeCertify LLC &middot; Built for ISA-Certified Arborists</div>
     </div>
     <div class="footer-links">
-      <a href="#">Privacy</a><a href="#">Terms</a><a href="#faq">FAQ</a><a href="mailto:hello@treecertify.com">Contact</a>
+      <a href="mailto:hello@treecertify.com?subject=Privacy%20Policy%20Request">Privacy</a>
+      <a href="mailto:hello@treecertify.com?subject=Terms%20of%20Service%20Request">Terms</a>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:hello@treecertify.com">Contact</a>
     </div>
   </div>
 </footer>
 
 <script>
-  // \u2500\u2500 MODAL \u2500\u2500
-  function openModal(e) { e.preventDefault(); document.getElementById('modal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  // -- MOBILE NAV --
+  function toggleMobileNav() {
+    document.getElementById('hamburger').classList.toggle('open');
+    document.getElementById('navMenu').classList.toggle('open');
+    document.body.style.overflow = document.getElementById('navMenu').classList.contains('open') ? 'hidden' : '';
+  }
+  function closeMobileNav() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('navMenu').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ── MODAL ──
+  function openModal(e) { e.preventDefault(); closeMobileNav(); document.getElementById('modal').classList.add('open'); document.body.style.overflow = 'hidden'; }
   function closeModal() { document.getElementById('modal').classList.remove('open'); document.body.style.overflow = ''; }
   document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
@@ -842,10 +980,10 @@
     form.style.display = 'none';
 
     var fields = {
-      'entry.674258843': name,
-      'entry.2081777311': email,
-      'entry.622601832': isa,
-      'entry.1096619862': city
+      'entry.1464777747': name,
+      'entry.1879351288': email,
+      'entry.2072643219': isa,
+      'entry.2121585551': city
     };
 
     for (var key in fields) {
